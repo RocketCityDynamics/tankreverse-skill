@@ -9,7 +9,7 @@ from time import sleep
 # 2. wait 3 seconds
 # 3. then turn the pins all to "low", effectively killing the power at the right time.
 
-#this is a permutation of the Python test script to drive the motors with a wireless gamepad. This takes a chunk of that code and makes it work by voice.
+#this is a permutation of the Python test script to drive the motors with a wireless gamepad. This takes a chunk of that code and makes it work hands free in a Mycroft Skill.
 
 in1 = 17 # R Motor GPIO address
 #GPIO 17 = wPi , BCM 8, phys addr = 18
@@ -49,7 +49,21 @@ class Tankreverse(MycroftSkill):
     def handle_tankreverse(self, message):
         self.speak_dialog('tankreverse')
 
-
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(in1,GPIO.OUT)
+        GPIO.setup(in2,GPIO.OUT)
+        GPIO.setup(en,GPIO.OUT)
+        GPIO.setup(in3,GPIO.OUT)
+        GPIO.setup(in4,GPIO.OUT)
+        GPIO.setup(en2,GPIO.OUT)
+        p=GPIO.PWM(en,1000)
+        p2=GPIO.PWM(en2,1000)
+        # tank forward
+        # Motor power setup here. Just one speed.
+        p.start(40)
+        p2.start(45) # l motor is a little weaker on my setup.
+        # Compensate with slightly more juice going to the weaker motor to help it drive straighter.
         GPIO.output(in1,GPIO.LOW)
         GPIO.output(in2,GPIO.HIGH)
         GPIO.output(in3,GPIO.HIGH)
