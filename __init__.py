@@ -60,6 +60,8 @@ class Tankreverse(MycroftSkill):
         GPIO.output(in2,GPIO.LOW)
         GPIO.output(in3,GPIO.LOW)
         GPIO.output(in4,GPIO.LOW)
+        p.stop()
+        p2.stop()
         
 def create_skill():
     return Tankreverse()
